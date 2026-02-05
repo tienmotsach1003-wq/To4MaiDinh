@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head> 
+<body>
+    
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI, sans-serif;
+}
+
+/* ===== NỀN RÕ – HIỆN ĐẠI ===== */
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,#dbeafe,#fef3c7);
+  color:#111827;
+}
+
+/* ===== HEADER ===== */
+header{
+  text-align:center;
+  padding:60px 20px;
+}
+
+header h1{
+  font-size:48px;
+  background:linear-gradient(90deg,#2563eb,#7c3aed,#06b6d4);
+  background-clip: text;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+header p{
+  margin-top:14px;
+  font-size:18px;
+  color:#1f2937;
+}
+
+/* ===== SECTION ===== */
+.section{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:42px;
+  padding:50px 10%;
+}
+
+/* ===== CARD ===== */
+.card{
+  border-radius:26px;
+  padding:42px;
+  text-align:center;
+  background:#ffffff;
+  box-shadow:0 16px 36px rgba(0,0,0,0.15);
+  transition:0.35s ease;
+}
+
+.card:hover{
+  transform:translateY(-12px) scale(1.05);
+  box-shadow:0 24px 52px rgba(0,0,0,0.22);
+}
+
+.card h2{
+  font-size:26px;
+  margin-bottom:14px;
+}
+
+.card p{
+  font-size:16px;
+  margin-bottom:26px;
+  color:#374151;
+}
+
+/* ===== BUTTON ===== */
+.card a{
+  position:relative;
+  display:inline-block;
+  padding:14px 40px;
+  border-radius:40px;
+  font-weight:bold;
+  text-decoration:none;
+  color:#fff;
+  background:linear-gradient(90deg,#2563eb,#06b6d4);
+  transition:0.25s;
+}
+
+.card a:hover{
+  transform:scale(1.1);
+  box-shadow:0 10px 26px rgba(37,99,235,0.45);
+}
+
+/* Tooltip */
+.card a::after{
+  content:"Mở tab mới";
+  position:absolute;
+  bottom:130%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#111827;
+  color:#fff;
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:13px;
+  opacity:0;
+  transition:0.25s;
+  pointer-events:none;
+}
+
+.card a:hover::after{opacity:1;}
+
+/* ===== MÀU RIÊNG TỪNG CARD ===== */
+.card.ia{
+  border-top:8px solid #2563eb;
+  background:linear-gradient(145deg,#eef2ff,#ffffff);
+}
+
+.card.iia{
+  border-top:8px solid #16a34a;
+  background:linear-gradient(145deg,#ecfdf5,#ffffff);
+}
+
+.card.exp{
+  border-top:8px solid #f97316;
+  background:linear-gradient(145deg,#fff7ed,#ffffff);
+}
+
+.card.btvn{
+  border-top:8px solid #f40404;
+  background:linear-gradient(145deg,#fff7ed,#ffffff);
+}
+/* ===== LOADING ===== */
+#loading{
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,0.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+  z-index:999;
+}
+
+#loading.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.loader{
+  width:58px;
+  height:58px;
+  border:6px solid #c7d2fe;
+  border-top:6px solid #2563eb;
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="loader"></div>
+</div>
+
+<header>
+  <h1>🥇 KHÁM PHÁ KIM LOẠI IIA</h1>
+  <p>WEB KHÁM PHÁ</p>
+</header>
+
+<section class="section">
+
+  <div class="card ia">
+    <h2>🔵 Giới thiệu nhóm IIA</h2>
+    <p>Đặc điểm </p>
+    <p>Tính chất vật lí-hóa học</p>
+    <a href="https://www.canva.com/design/DAG_bG0LMZk/X34OZ16uYSYSz_xt-NtgJA/edit" class="open-tab">Vào xem</a>
+  </div>
+
+  <div class="card iia">
+    <h2>🎇 So sánh nhóm IA và IIA,...</h2>
+    <p>Điểm giống và khác nhau</p>
+    <a href="chemis.html" class="open-tab">Vào xem</a>
+  </div>
+
+  <div class="card exp">
+    <h2>🎉 Câu hỏi </h2>
+    <p>Củng cố sau bài</p>
+    <a href="cauhoi.html" class="open-tab">bắt đầu</a>
+  </div>
+
+  <div class="card btvn">
+    <h2>‼️⚠️☢️🔞</h2> 
+     <h2>Bài tập về nhà</h2>
+     <p>Không dành cho người yếu tim❗</p>
+    <a href="baitapvenha.html" class="open-tab">bắt đầu</a>
+  </div>
+
+</section>
+
+<script>
+/* ===== NHỚ SCROLL ===== */
+window.addEventListener("beforeunload",()=>{
+  sessionStorage.setItem("scrollY",window.scrollY);
+});
+
+window.addEventListener("load",()=>{
+  const y=sessionStorage.getItem("scrollY");
+  if(y) window.scrollTo(0,parseInt(y));
+});
+
+/* ===== LOADING + TAB MỚI ===== */
+const loading=document.getElementById("loading");
+
+document.querySelectorAll(".open-tab").forEach(link=>{
+  link.addEventListener("click",e=>{
+    e.preventDefault();
+    loading.classList.add("active");
+    const url=link.getAttribute("href");
+    setTimeout(()=>{
+      window.open(url,"_blank","noopener");
+      loading.classList.remove("active");
+    },500);
+  });
+});
+</script>
+
+</body>
+</html>
