@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Trắc nghiệm kim loại nhóm IIA</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI, sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,#dbeafe,#fef3c7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#111827;
+}
+
+.quiz-box{
+  width:90%;
+  max-width:720px;
+  background:#fff;
+  border-radius:24px;
+  padding:40px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.2);
+  animation:fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:none;}
+}
+
+h1{
+  text-align:center;
+  margin-bottom:25px;
+  background:linear-gradient(90deg,#2563eb,#7c3aed);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.question{
+  font-size:20px;
+  margin-bottom:25px;
+}
+
+.answers{
+  display:grid;
+  gap:14px;
+}
+
+.answer{
+  padding:14px 18px;
+  border-radius:14px;
+  border:2px solid #e5e7eb;
+  cursor:pointer;
+  transition:0.25s;
+}
+
+.answer:hover{
+  background:#eff6ff;
+  border-color:#3b82f6;
+}
+
+.answer.correct{
+  background:#dcfce7;
+  border-color:#16a34a;
+}
+
+.answer.wrong{
+  background:#fee2e2;
+  border-color:#dc2626;
+}
+
+.next-btn{
+  margin-top:28px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(90deg,#2563eb,#06b6d4);
+  color:#fff;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+  <h1>🥇 Trắc nghiệm nhóm IIA</h1>
+  <div class="question" id="question"></div>
+  <div class="answers" id="answers"></div>
+  <button class="next-btn" id="nextBtn">Câu tiếp theo</button>
+</div>
+
+<script>
+/* ===== DATA ===== */
+let quizData = [
+  { q:"Kim loại nhóm IIA có cấu hình electron lớp ngoài cùng là:",
+    a:["ns¹","ns²","np²","ns²np⁶"], correct:1 },
+
+  { q:"So với Mg, Ca có:",
+    a:["bán kính nhỏ hơn","độ âm điện lớn hơn","tính kim loại mạnh hơn","năng lượng ion hóa lớn hơn"], correct:2 },
+
+  { q:"Phát biểu sai về kim loại nhóm IIA là:",
+    a:["Đều có 2 electron lớp ngoài cùng",
+       "Đều tạo ion M²⁺ bền",
+       "Tất cả đều phản ứng với nước ở nhiệt độ thường",
+       "Tính kim loại tăng dần từ Be đến Ba"], correct:2 },
+
+  { q:"Trong pháo hoa màu xanh lục, thành phần tạo màu chủ yếu là hợp chất của:",
+    a:["Ca","Sr","Ba","Mg"], correct:2 },
+
+  { q:"Kim loại nhóm IIA có bán kính nguyên tử lớn nhất là:",
+    a:["Be","Mg","Ca","Ba"], correct:3 },
+
+  { q:"Để nhận biết ion Ba²⁺ trong dung dịch, thuốc thử thích hợp nhất là:",
+    a:["NaCl","NaOH","Na₂SO₄","HCl"], correct:2 },
+
+  { q:"CaSO₄·2H₂O trong tự nhiên được gọi là:",
+    a:["Vôi sống","Thạch cao sống","Vôi tôi","Đá vôi"], correct:1 },
+
+  { q:"Hợp chất của calcium dùng để đúc tượng, bó bột là:",
+    a:["CaSO₄·H₂O","CaCO₃","CaO","CaSO₄·2H₂O"], correct:0 },
+
+  { q:"Phương pháp điều chế Ca từ CaCl₂ là:",
+    a:["Nhiệt phân","Điện phân CaCl₂ nóng chảy",
+       "Dùng Na khử trong dung dịch","Điện phân dung dịch"], correct:1 },
+
+  { q:"Kim loại nhóm IIA không phản ứng với nước ở là:",
+    a:["Ca","Sr","Mg","Be"], correct:3 }
+];
+
+/* ===== SHUFFLE CHUẨN ===== */
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
+/* XÁO TRỘN CÂU HỎI */
+shuffle(quizData);
+
+/* XÁO TRỘN ĐÁP ÁN */
+quizData.forEach(q=>{
+  const correctText=q.a[q.correct];
+  shuffle(q.a);
+  q.correct=q.a.indexOf(correctText);
+});
+
+let index=0;
+const qEl=document.getElementById("question");
+const aEl=document.getElementById("answers");
+const nextBtn=document.getElementById("nextBtn");
+
+function loadQuestion(){
+  nextBtn.style.display="none";
+  aEl.innerHTML="";
+  const data=quizData[index];
+  qEl.textContent=`Câu ${index+1}: ${data.q}`;
+
+  data.a.forEach((text,i)=>{
+    const div=document.createElement("div");
+    div.className="answer";
+    div.textContent=String.fromCharCode(65+i)+". "+text;
+    div.onclick=()=>checkAnswer(div,i);
+    aEl.appendChild(div);
+  });
+}
+
+function checkAnswer(el,i){
+  const correct=quizData[index].correct;
+  document.querySelectorAll(".answer").forEach(a=>a.style.pointerEvents="none");
+
+  if(i===correct){
+    el.classList.add("correct");
+  }else{
+    el.classList.add("wrong");
+    aEl.children[correct].classList.add("correct");
+  }
+  nextBtn.style.display="block";
+}
+
+nextBtn.onclick=()=>{
+  index++;
+  if(index<quizData.length){
+    loadQuestion();
+  }else{
+    qEl.textContent="🎉 Hoàn thành bài trắc nghiệm!";
+    aEl.innerHTML="";
+    nextBtn.style.display="none";
+  }
+};
+
+loadQuestion();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Game Trắc nghiệm Hóa học IIA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI,Arial;
+  background:radial-gradient(circle at top,#1a2a6c,#000);
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+.quiz-box{
+  width:95%;
+  max-width:850px;
+  background:#0d1117;
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 0 35px rgba(0,255,255,.35);
+}
+h1{text-align:center;color:#00e5ff}
+
+.info{
+  display:flex;
+  justify-content:space-between;
+  margin:15px 0;
+  font-size:18px;
+}
+
+.progress{
+  height:10px;
+  background:#222;
+  border-radius:20px;
+  overflow:hidden;
+}
+.progress div{
+  height:100%;
+  background:linear-gradient(90deg,#00e5ff,#00ff9c);
+  width:100%;
+  transition:width 1s linear;
+}
+
+.question{
+  font-size:22px;
+  margin:25px 0;
+  white-space: pre-line; /* QUAN TRỌNG: xuống dòng bằng \n */
+}
+
+.answers button{
+  width:100%;
+  padding:15px;
+  margin:10px 0;
+  font-size:17px;
+  background:#161b22;
+  border:2px solid #30363d;
+  color:#fff;
+  border-radius:12px;
+  cursor:pointer;
+  transition:.3s;
+}
+.answers button:hover{
+  transform:scale(1.03);
+  background:#21262d;
+}
+.correct{
+  background:#1b5e20!important;
+  border-color:#00ff9c!important;
+}
+.wrong{
+  background:#7f1d1d!important;
+  border-color:#ff6b6b!important;
+}
+
+.next{
+  display:none;
+  width:100%;
+  padding:15px;
+  margin-top:15px;
+  font-size:18px;
+  background:#00e5ff;
+  color:#000;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  position:relative;
+  z-index:10; /* FIX không bấm được */
+}
+
+.result{
+  text-align:center;
+  font-size:22px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+<h1>🎯 Game Trắc nghiệm Hóa học – Nhóm IIA</h1>
+
+<div class="info">
+  <div>⏱ <span id="time">30</span>s</div>
+  <div>⭐ Điểm: <span id="score">0</span></div>
+</div>
+
+<div class="progress"><div id="bar"></div></div>
+
+<div id="quiz">
+  <div class="question" id="question"></div>
+  <div class="answers" id="answers"></div>
+  <button class="next" id="next">Câu tiếp ➜</button>
+</div>
+
+<div class="result" id="result" style="display:none"></div>
+</div>
+
+<script>
+const questions = [
+{
+    q: "Ba phản ứng với nước mạnh hơn Mg do nguyên nhân nào sau đây:\n" +
+       "(1) Barium có tính khử mạnh hơn magnesium\n" +
+       "(2) Độ tan của Ba(OH)₂ trong nước cao hơn nhiều so với Mg(OH)₂\n" +
+       "(3) Bọt khí H₂ sinh ra bám trên bề mặt Mg nhiều hơn, cản trở phản ứng tiếp diễn",
+    a: [
+      "(1) và (2)",
+      "(1), (2) và (3)",
+      "(1) và (3)",
+      "(1) và (2)"
+    ],
+    c: 1
+},
+{q:"Phản ứng nào sau đây được gọi là phản ứng tôi vôi?",
+a:["CaCO₃→CaO+CO₂","Ca+2H₂O→Ca(OH)₂+H₂","CaO+H₂O→Ca(OH)₂","2Ca+O₂→2CaO"],c:2},
+{q:"Nhận biết dung dịch BaCl₂ bằng dung dịch nào?",
+a:["NaOH","Na₂CO₃","NaCl","NaNO₃"],c:1},
+{q:"Trong phản ứng Mg với O₂, mỗi nguyên tử Mg nhường bao nhiêu e?",
+a:["1","2","3","4"],c:1},
+{q:"Kim loại phản ứng chậm với nước ở nhiệt độ thường?",
+a:["Mg","Be","Sr","Ba"],c:0},
+{q:"BaCl₂ cho ngọn lửa màu gì?",
+a:["Tím nhạt","Vàng cam","Lục vàng","Đỏ"],c:2},
+{q:"Kim loại kiềm thổ điều chế bằng phương pháp:",
+a:["Nhiệt luyện","Thủy luyện","Điện phân nóng chảy muối chloride","Điện phân dung dịch"],c:2},
+{q:":Trong công nghiệp,điều chế kim loại kiềm thổ bằng phương pháp điện phân nóng chảy muối chloride. Quá trình khử ở cathode là:",
+a:["M→M⁺+e","M²⁺+2e→M","M→M²⁺+2e","M⁺+e→M"],c:1},
+{q:"Dung dịch kiểm tra ion Ca²⁺ là:",
+a:["HCl","NaNO₃","NaCl","Na₂CO₃"],c:3},
+{q:"Dung dịch kiểm tra ion SO₄²⁻ là:",
+a:["NaCl","NaNO₃","BaCl₂","HCl"],c:2},
+{q:"Dãy kim loại tác dụng nhanh với nước:",
+a:["Be,Na,Ba","Mg,Ca,Ba","Li,Ba,Ca","Sr,Sn,Ba"],c:2},
+{q:"Phương trình nào không đúng?",
+a:["Ca+2H₂O→Ca(OH)₂+H₂","BeO+H₂O→Be(OH)₂","Mg+H₂SO₄→MgSO₄+H₂","Be+2NaOH→Na₂BeO₂+H₂"],c:1},
+{q:"Tổng số proton và electron của ion Mg²⁺ là:",
+a:["20","36","22","24"],c:2},
+{q:"Calcium tập trung chủ yếu ở:",
+a:["Xương","Răng","Cơ","Móng"],c:0},
+{q:"Chất dùng sát trùng tạm thời rác thải:",
+a:["Cát","Than đá","Đá vôi","Vôi bột"],c:3},
+{q:"So sánh CaSO₄ và BaSO₄, nhận định đúng:",
+a:["Khó nhiệt phân hơn","Khó thủy phân hơn","Dễ kết tủa hơn","Dễ tan hơn"],c:3},
+{q:"Nhận định không đúng về kim loại IIA:",
+a:["Khối lượng riêng nhỏ","Cứng hơn IA","Mạng lập phương tâm khối","Nhiệt độ nóng chảy thấp"],c:2},
+{q:"Hợp chất chính của vỏ ốc sò là:",
+a:["CaO","CaCO₃","Ca(OH)₂","Ca₃(PO₄)₂"],c:1},
+{q:"Số phát biểu đúng về kim loại IIA là:\n" +
+    "(1) Số oxi hóa của các nguyên tố kim loại nhóm IIA trong hợp chất là +2\n" +
+    "(2) Beryllium là kim loại nhẹ nhất trong các kim loại nhóm IIA\n" +
+    "(3) Magnesium là kim loại có nhiệt độ nóng chảy thấp nhất trong nhóm IIA\n" +
+    "(4) Các kim loại nhóm IIA đều có cấu trúc mạng tinh thể lập phương tâm khối\n  " +
+    "(5) Các kim loại nhóm IIA đều dẫn điện" ,
+a:["2","3","4","1"],c:1},
+{q:"Cho các phát biểu sau: \n" +
+    "(1) Các kim loại nhóm IIA đều có 2 electron ở lớp ngoài cùng\n"+
+    "(2) Từ Be → Ba, bán kính nguyên tử giảm dần\n"+
+    "(3) Tính khử của kim loại nhóm IIA tăng dần từ trên xuống dưới\n"+
+    "(4) Ion Ca2+ và Mg2+ đóng vai trò sinh học quan trọng\n"+
+    "(5) Muối cacbonat của kim loại nhóm IIA đều không tan trong nước\n",
+a:["1","3","4","5"],c:2}
+
+];
+
+shuffle(questions);
+
+let i = 0, score = 0, correct = 0, wrong = 0;
+let time = 30, timer;
+
+const qEl = document.getElementById("question");
+const aEl = document.getElementById("answers");
+const next = document.getElementById("next");
+const bar = document.getElementById("bar");
+
+load();
+
+function load(){
+  resetTimer();
+  next.style.display = "none";
+  next.disabled = false;
+  aEl.innerHTML = "";
+
+  let q = questions[i];
+  qEl.textContent = `Câu ${i+1}/${questions.length}:\n${q.q}`;
+
+  let arr = q.a.map((text, idx) => ({
+    text,
+    correct: idx === q.c
+  }));
+
+  shuffle(arr);
+
+  arr.forEach(o => {
+    let b = document.createElement("button");
+    b.textContent = o.text;
+    b.dataset.correct = o.correct;
+    b.onclick = () => choose(b, o.correct);
+    aEl.appendChild(b);
+  });
+}
+
+function choose(btn, isCorrect){
+  stopTimer();
+
+  // disable CHỈ các đáp án
+  [...aEl.children].forEach(b => b.disabled = true);
+
+  if(isCorrect){
+    btn.classList.add("correct");
+    score += 5;
+    correct++;
+  }else{
+    btn.classList.add("wrong");
+    [...aEl.children]
+      .find(b => b.dataset.correct === "true")
+      ?.classList.add("correct");
+    wrong++;
+  }
+
+  document.getElementById("score").textContent = score;
+  next.style.display = "block";
+}
+
+next.onclick = () => {
+  i++;
+  if(i < questions.length) load();
+  else end();
+};
+
+function resetTimer(){
+  time = 30;
+  bar.style.width = "100%";
+  document.getElementById("time").textContent = time;
+  timer = setInterval(() => {
+    time--;
+    bar.style.width = (time/30*100) + "%";
+    document.getElementById("time").textContent = time;
+    if(time === 0){
+      stopTimer();
+      next.style.display = "block";
+    }
+  }, 1000);
+}
+function stopTimer(){ clearInterval(timer); }
+
+function end(){
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+  document.getElementById("result").innerHTML =
+    `🏁 <b>KẾT QUẢ CUỐI CÙNG</b><br><br>
+     ⭐ Tổng điểm: <b>${score}</b><br>
+     ✅ Đúng: ${correct} câu<br>
+     ❌ Sai: ${wrong} câu`;
+}
+
+function shuffle(a){
+  for(let i = a.length - 1; i > 0; i--){
+    let j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+}
+</script>
+
+</body>
+</html>

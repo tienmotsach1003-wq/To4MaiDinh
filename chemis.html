@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>So sánh kim loại IA & IIA</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{background:#050505;color:#fff;line-height:1.7}
+
+header{
+  padding:40px;
+  text-align:center;
+  background:linear-gradient(90deg,#ff9800,#ff5722)
+}
+header h1{font-size:44px}
+
+section{padding:60px 8%}
+h2{color:#ff9800;font-size:38px;margin-bottom:30px}
+
+.card{background:#111;padding:35px;border-radius:20px;margin-bottom:40px}
+.same p{font-size:26px;margin-bottom:14px}
+
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #333;padding:16px;text-align:center;font-size:18px}
+th{background:#ff9800;color:#000}
+
+.flames{display:flex;flex-wrap:wrap;gap:30px}
+.flame{
+  width:170px;height:230px;background:#111;border-radius:22px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;transition:.4s
+}
+.flame:hover{transform:translateY(-12px) scale(1.1)}
+.fire{width:110px;height:110px;border-radius:50%;box-shadow:0 0 40px currentColor;margin-bottom:10px}
+.name{font-size:26px;font-weight:bold}
+
+.info{
+  margin-top:30px;
+  padding:25px;
+  background:#1a1a1a;
+  border-radius:18px;
+  font-size:20px;
+  min-height:200px
+}
+
+button{
+  padding:14px 30px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  background:#222;
+  color:#fff
+}
+button:hover{background:#ff9800;color:#000}
+
+/* LINK VIDEO */
+.video-links{
+  display:flex;
+  gap:15px;
+  margin-top:20px;
+  flex-wrap:wrap
+}
+.video-links a{
+  padding:12px 18px;
+  background:#222;
+  border-radius:25px;
+  color:#fff;
+  text-decoration:none;
+  border:1px solid #444;
+  transition:.3s
+}
+.video-links a:hover{
+  background:#ff9800;
+  color:#000;
+  transform:scale(1.05)
+}
+
+/* FIREWORK */
+.firework{
+  position:fixed;
+  width:8px;height:8px;
+  border-radius:50%;
+  animation:explode 1.6s ease-out forwards;
+  z-index:999
+}
+@keyframes explode{
+  to{transform:translate(var(--x),var(--y)) scale(0);opacity:0}
+}
+
+footer{text-align:center;padding:20px;color:#aaa}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>SO SÁNH KIM LOẠI NHÓM IA & IIA</h1>
+</header>
+
+<!-- GIỐNG NHAU -->
+<section>
+<h2>1. Điểm giống nhau</h2>
+<div class="card same">
+<p>✔ Đều là kim loại khối s</p>
+<p>✔ Có tính khử mạnh, dễ nhường electron</p>
+<p>✔ Phản ứng với O₂ tạo oxit</p>
+<p>✔ Tác dụng với axit giải phóng H₂</p>
+<p>✔ Trong tự nhiên chỉ tồn tại ở dạng hợp chất</p>
+</div>
+</section>
+
+<!-- KHÁC NHAU -->
+<section>
+<h2>2. Điểm khác nhau</h2>
+<div class="card">
+<table>
+<tr>
+<th>Tiêu chí</th>
+<th>Nhóm IA</th>
+<th>Nhóm IIA</th>
+</tr>
+<tr><td>Cấu hình e ngoài</td><td>ns¹</td><td>ns²</td></tr>
+<tr><td>Hóa trị</td><td>I</td><td>II</td></tr>
+<tr><td>Độ cứng</td><td>Rất mềm</td><td>Cứng hơn</td></tr>
+<tr>
+<td>Phản ứng với nước</td>
+<td>Rất mạnh</td>
+<td>Be: không – Mg: chậm – Ca→Ba: mạnh</td>
+</tr>
+<tr>
+<td>Màu ngọn lửa</td>
+<td>Li đỏ – Na vàng – K tím</td>
+<td>Ca đỏ – Sr đỏ thẫm – Ba xanh lục</td>
+</tr>
+</table>
+</div>
+</section>
+
+<!-- NHÓM IA -->
+<section>
+<h2>3. Nhóm IA</h2>
+<div class="flames">
+<div class="flame" onclick="showIA('Li')"><div class="fire" style="background:red;color:red"></div><div class="name">Li</div></div>
+<div class="flame" onclick="showIA('Na')"><div class="fire" style="background:yellow;color:yellow"></div><div class="name">Na</div></div>
+<div class="flame" onclick="showIA('K')"><div class="fire" style="background:violet;color:violet"></div><div class="name">K</div></div>
+<div class="flame" onclick="showIA('Rb')"><div class="fire" style="background:crimson;color:crimson"></div><div class="name">Rb</div></div>
+<div class="flame" onclick="showIA('Cs')"><div class="fire" style="background:blue;color:blue"></div><div class="name">Cs</div></div>
+</div>
+
+<div class="info" id="infoIA">👉 Bấm vào nguyên tố nhóm IA</div>
+</section>
+
+<!-- NHÓM IIA -->
+<section>
+<h2>4. Nhóm IIA</h2>
+<button onclick="window.open('https://drive.google.com/file/d/1alCY0uJKN_2V9X-BgOWsmA_OI2hrIe-R/view?usp=drive_link','_blank')">
+🎆 Pháo hoa nhóm IIA
+</button>
+
+
+<div class="flames">
+<div class="flame" onclick="showIIA('Be')"><div class="fire" style="background:#fff;color:#fff"></div><div class="name">Be</div></div>
+<div class="flame" onclick="showIIA('Mg')"><div class="fire" style="background:#eee;color:#eee"></div><div class="name">Mg</div></div>
+<div class="flame" onclick="showIIA('Ca')"><div class="fire" style="background:red;color:red"></div><div class="name">Ca</div></div>
+<div class="flame" onclick="showIIA('Sr')"><div class="fire" style="background:crimson;color:crimson"></div><div class="name">Sr</div></div>
+<div class="flame" onclick="showIIA('Ba')"><div class="fire" style="background:lime;color:lime"></div><div class="name">Ba</div></div>
+<div class="flame" onclick="showIIA('Ra')"><div class="fire" style="background:violet;color:violet"></div><div class="name">Ra</div></div>
+</div>
+
+<div class="info" id="infoIIA">👉 Bấm vào nguyên tố nhóm IIA</div>
+</section>
+
+<footer>© Web Hóa học IA & IIA</footer>
+
+<script>
+document.addEventListener("click", function(e){
+  if(e.target.classList.contains("water-link")){
+    e.preventDefault();
+
+    const element = e.target.dataset.el;
+
+    // Nếu là Ra
+    if(element === "Ra"){
+      infoIIA.innerHTML = `
+        <b>Ra</b><br><br>
+        ⚠️ Bạn nghĩ người ta lại cho 1 chất phóng xạ vừa nguy hiểm vừa đắt cho vào nước để xem thôi à 💀
+      `;
+
+      setTimeout(() => {
+        infoIIA.innerHTML = `👉 Bấm vào nguyên tố nhóm IIA`;
+      }, 5000);
+    }
+    // Kim loại khác -> mở video bình thường
+    else{
+      window.open(IIA[element].v.water, "_blank");
+    }
+  }
+});
+
+/* VIDEO IA */
+const IA={
+Li:{burn:"https://www.youtube.com/watch?v=GtEnv3lYN9g",water:"https://www.youtube.com/watch?v=J0Xz3C1kZ4o"},
+Na:{burn:"https://www.youtube.com/watch?v=GtEnv3lYN9g",water:"https://www.youtube.com/watch?v=Z9Lk3Q6mH7A"},
+K:{burn:"https://www.youtube.com/watch?v=GtEnv3lYN9g",water:"https://www.youtube.com/watch?v=Q1d8X9p3z2I"},
+Rb:{burn:"https://www.youtube.com/watch?v=GtEnv3lYN9g",water:"https://www.youtube.com/watch?v=7J8pQy2nH5A"},
+Cs:{burn:"https://www.youtube.com/watch?v=GtEnv3lYN9g",water:"https://www.youtube.com/watch?v=F3R2d9Y7z5A"}
+};
+
+function showIA(e){
+infoIA.innerHTML=`
+<b>${e}</b><br>
+🧪 Đốt cháy trong O₂<br>
+💧 Phản ứng với nước
+
+<div class="video-links">
+<a href="${IA[e].burn}" target="_blank">🔥 Video đốt cháy</a>
+<a href="${IA[e].water}" target="_blank">💧 Video phản ứng với nước</a>
+</div>`;
+}
+
+/* PHÁO HOA */
+function firework(color){
+for(let i=0;i<120;i++){
+let f=document.createElement("div");
+f.className="firework";
+f.style.background=color;
+f.style.left=innerWidth/2+"px";
+f.style.top=innerHeight/2+"px";
+f.style.setProperty("--x",(Math.random()*600-300)+"px");
+f.style.setProperty("--y",(Math.random()*600-300)+"px");
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),1600);
+}}
+function fireworkIIA(){firework("red");firework("lime");firework("crimson");}
+
+/* VIDEO IIA */
+const IIA={
+Be:{color:"#fff",v:{burn:"https://www.youtube.com/shorts/KrR4EpLPR7A?feature=share",water:"https://www.youtube.com/watch?v=7t2ICQuvE_U"}},
+Mg:{color:"#eee",v:{burn:"https://www.youtube.com/watch?v=oOgE7rq9FT8&pp=ygUidGjDrSBuZ2hp4buHbSDEkeG7kXQga2ltIGxv4bqhaSBiYQ%3D%3D",water:"https://www.youtube.com/shorts/sFbWhehUZ6E"}},
+Ca:{color:"red",v:{burn:"https://www.tiktok.com/@chemicalkim/video/7135459162108120366?is_from_webapp=1&sender_device=pc",water:"https://www.youtube.com/watch?v=eccWWqsCwC4"}},
+Sr:{color:"crimson",v:{burn:"https://www.youtube.com/watch?v=yQT8YUpb5Z0&pp=ygUaYnVybmluZyBzdHJvbnRpIGV4cGVyaW1lbnQ%3D",water:"https://www.youtube.com/watch?v=0Q8TVIloZpU"}},
+Ba:{color:"lime",v:{burn:"https://www.youtube.com/watch?v=eNapDhl6Z70",water:"https://www.youtube.com/shorts/aImJREQ4PCo?si=Y3IqGBwQFf6xi_67"}},
+Ra:{color:"violet",v:{burn:"https://www.youtube.com/watch?v=cq76jxsSC0E",water:"https://www.youtube.com/watch?v=7t2ICQuvE_U"}}
+};
+
+function showIIA(e){
+firework(IIA[e].color);
+infoIIA.innerHTML=`
+<b>${e}</b><br>
+🧪 Đốt cháy – 💧 Phản ứng với nước – 🎆 Màu lửa
+
+<div class="video-links">
+<a href="${IIA[e].v.burn}" target="_blank">🔥 Đốt cháy</a>
+<a href="#" class="water-link" data-el="${e}">💧 Phản ứng nước</a>
+</div>`;
+}
+</script>
+
+</body>
+</html>
