@@ -85,6 +85,29 @@ button:hover{background:#ff9800;color:#000}
   animation:explode 1.6s ease-out forwards;
   z-index:999
 }
+.back-wrap{
+  text-align:center;
+  margin:40px 0 10px;
+}
+
+.back-btn{
+  display:inline-block;
+  padding:14px 34px;
+  border-radius:40px;
+  background:#222;
+  color:#fff;
+  text-decoration:none;
+  font-size:18px;
+  border:1px solid #444;
+  transition:.35s;
+}
+
+.back-btn:hover{
+  background:#ff9800;
+  color:#000;
+  transform:scale(1.08);
+}
+
 @keyframes explode{
   to{transform:translate(var(--x),var(--y)) scale(0);opacity:0}
 }
@@ -149,10 +172,6 @@ footer{text-align:center;padding:20px;color:#aaa}
 <div class="flame" onclick="showIA('Cs')"><div class="fire" style="background:blue;color:blue"></div><div class="name">Cs</div></div>
 </div>
 
-<div class="back-wrap">
-  <a href="https://tienmotsach1003-wq.github.io/To4MaiDinh/" class="back-btn">⬅ Quay lại trang</a>
-</div>
-
 <div class="info" id="infoIA">👉 Bấm vào nguyên tố nhóm IA</div>
 </section>
 
@@ -175,6 +194,10 @@ footer{text-align:center;padding:20px;color:#aaa}
 
 <div class="info" id="infoIIA">👉 Bấm vào nguyên tố nhóm IIA</div>
 </section>
+
+<div class="back-wrap">
+  <a href="https://tienmotsach1003-wq.github.io/To4MaiDinh/" class="back-btn">⬅ Quay lại trang</a>
+</div>
 
 <footer>© Web Hóa học IA & IIA</footer>
 
@@ -264,4 +287,5 @@ infoIIA.innerHTML=`
 
 </body>
 </html>
+
 
